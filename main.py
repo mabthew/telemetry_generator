@@ -1,5 +1,4 @@
-import fileHandler
-import processHandler
+import handlers
 import datetime
 import os
 import pwd
@@ -29,12 +28,13 @@ def printMenu():
     print("\nGenerate and record endpoint activity.")
 
     print("\nOptions:")
-    print("\t\'create [filename]\' \t\t Create a new file.")
-    print("\t\'modify [filename] [content]\' \t Modify a file.")
-    print("\t\'delete [filename]\' \t\t Delete a file.")
-    print("\t\'run [command] [args...]\' \t Execute a command.")
-    print("\t\'help\' \t\t\t Show this message.")
-    print("\t\'exit\' \t\t\t Exit program.\n")
+    print(
+        "\t\'create <filename> \"[content]\"\'  Create a new file.")
+    print("\t\'modify <filename> \"[content]\"\'  Create or append to a file.")
+    print("\t\'delete <filename>\' \t\t Delete a file.")
+    print("\t\'run <command> [args...]\' \t Execute a command.")
+    print("\t\'help\' \t\t\t\t Show this message.")
+    print("\t\'exit\' \t\t\t\t Exit program.\n")
 
 
 def parseInput(input):
@@ -51,27 +51,22 @@ def executeCommand(userInput):
     username = pwd.getpwuid(os.getuid())[0]
 
     executor = None
+    success = False
     if action == "exit":
         return False
-    elif action == "create":
-        executor = fileHandler.FileHandler(timestamp, username)
-        executor.create(args)
-    elif action == "modify":
-        executor = fileHandler.FileHandler(timestamp, username)
-        executor.modify(args)
-    elif action == "delete":
-        executor = fileHandler.FileHandler(timestamp, username)
-        executor.delete(args)
+    elif action == "create" or action == "modify" or action == "delete":
+        executor = handlers.fileHandler.FileHandler(timestamp, username)
+        success = executor.call(action, args)
     elif action == "run":
-        executor = processHandler.ProcessHandler(timestamp, username)
-        executor.run(args)
+        executor = handlers.processHandler.ProcessHandler(timestamp, username)
+        success = executor.run(args)
     elif action == "help":
         printMenu()
     else:
         print("\n\'" + userInput + "\' is not a command.")
         print("Enter \'help\' to see available commands.\n")
 
-    if executor:
+    if executor and success:
         executor.log()
 
     return True
