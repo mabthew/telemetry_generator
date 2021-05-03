@@ -1,9 +1,10 @@
 import os
+import abstractHandler
 
 
-class FileHandler:
-    def __init__(self):
-        self.data = []
+class FileHandler(abstractHandler.AbstractHandler):
+    def __init__(self, timestamp, username):
+        super().__init__(timestamp, username)
 
     # create file
     def create(self, path):
