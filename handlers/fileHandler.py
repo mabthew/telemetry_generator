@@ -36,7 +36,7 @@ class FileHandler(AbstractHandler):
             else:
                 raise Exception("Unimplemented file handling function.")
         else:
-            print("\n Invalid input. Enter help to see how to format input.\n")
+            print("\n Invalid input. See 'help'.\n")
             return False
 
         p.start()
