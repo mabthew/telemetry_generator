@@ -31,15 +31,10 @@ class NetworkHandler(AbstractHandler):
     # create process
     def send(self, args):
         
-        valid, url, port, data = self.validateArgs(args)
+        valid, address, port, data = self.validateArgs(args)
 
+        self.destination_address = address
         self.size = len(data.encode('utf-8'))   # size of data in bytes
-
-        if not validators.url(url):
-            print("\n Invalid url.\n")
-            return False
-        else:
-            self.destination_address = url
 
         if not port.isnumeric():
             print("\n Invalid port.\n")
@@ -48,14 +43,19 @@ class NetworkHandler(AbstractHandler):
             self.destination_port = int(port)
 
         if valid:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            
-            
-            s.connect((url, port))
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect((address, int(port)))
+               
+            except:
+                print("Socket failed to connect. Check that address and port are correct.") # TODO: better error handling
+                return False
+
             socketInfo = s.getsockname()
-            self.source_address =socketInfo[0]
+
+            self.source_address = socketInfo[0]
             self.source_port = socketInfo[1]
-            p = Process(target=self.sendData, args=[s, url, data])
+            p = Process(target=self.sendData, args=[s, address, data])
             
         else:
             print("\n Invalid input. See 'help'.\n")
@@ -64,16 +64,13 @@ class NetworkHandler(AbstractHandler):
         p.start()
 
         # extract process info
-        self.process_id = p.pid
-        ps = psutil.Process(p.pid)
-        self.process_name = ps.name()
-        self.command_line = ps.exe()
+        self.getProcessInfo(p.pid)        
 
         p.join()  # this blocks until the process terminates
     
         return True
 
-    def sendData(self, s, url, data):
+    def sendData(self, s, address, data):
         s.send(b'hello')
         s.close()
 

@@ -17,10 +17,7 @@ class ProcessHandler(AbstractHandler):
             p = subprocess.Popen(parsedCommand)
 
             # extract process info
-            self.process_id = p.pid
-            ps = psutil.Process(p.pid)
-            self.process_name = ps.name()
-            self.command_line = ps.exe()
+            self.getProcessInfo(p.pid)
 
             p.wait()
             return True

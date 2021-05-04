@@ -46,10 +46,7 @@ class FileHandler(AbstractHandler):
         p.start()
 
         # extract process info
-        self.process_id = p.pid
-        ps = psutil.Process(p.pid)
-        self.process_name = ps.name()
-        self.command_line = ps.exe()
+        self.getProcessInfo(p.pid)
 
         p.join()  # this blocks until the process terminates
 
