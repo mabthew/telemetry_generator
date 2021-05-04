@@ -5,7 +5,6 @@ import json
 import psutil
 from .abstractHandler import AbstractHandler
 
-
 class ProcessHandler(AbstractHandler):
     def __init__(self, timestamp, username):
         super().__init__(timestamp, username)
@@ -41,4 +40,5 @@ class ProcessHandler(AbstractHandler):
             "command_line": self.command_line,
             "process_id": self.process_id
         })
-        print(res)
+        
+        self.writer.logMetric(res)

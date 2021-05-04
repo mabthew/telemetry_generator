@@ -1,12 +1,30 @@
 from handlers import fileHandler
 from handlers import processHandler
+from handlers import logWriter 
 import datetime
+import time
 import os
 import pwd
 import subprocess
+import argparse
 
 
 def main():
+
+    parser = argparse.ArgumentParser(description='Generate and record endpoint activity.')
+
+    parser.add_argument('-f', '--file', help='Path to JSON output file.', required=False)
+
+    args = parser.parse_args()
+
+    if args.file != None:
+        writer = logWriter.LogWriter(args.file)
+    else:
+        time = datetime.datetime.now().strftime("%Y_%m_%d_%H%M%S")
+        writer = logWriter.LogWriter("logs/" +  time + ".json")
+    
+    writer.openLog()
+
     running = True
 
     printMenu()
@@ -15,6 +33,7 @@ def main():
             userInput = input("command: ")
             running = executeCommand(userInput)
         except KeyboardInterrupt:
+            writer.closeLog()
             return
 
 
@@ -32,8 +51,7 @@ def printMenu():
     print("\nGenerate and record endpoint activity.")
 
     print("\nOptions:")
-    print(
-        "\t\'create <filename> \"[content]\"\'  Create a new file.")
+    print("\t\'create <filename> \"[content]\"\'  Create a new file.")
     print("\t\'modify <filename> \"[content]\"\'  Create or append to a file.")
     print("\t\'delete <filename>\' \t\t Delete a file.")
     print("\t\'run <command> [args...]\' \t Execute a command.")
@@ -57,6 +75,7 @@ def executeCommand(userInput):
     executor = None
     success = False
     if action == "exit":
+        logWriter.LogWriter.getInstance().closeLog()
         return False
     elif action == "create" or action == "modify" or action == "delete":
         executor = fileHandler.FileHandler(timestamp, username)

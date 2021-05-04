@@ -27,12 +27,15 @@ class FileHandler(AbstractHandler):
             if method == "create":
                 p = Process(target=self.create, args=(path, content))
                 self.activity_descriptor = "created"
+
             elif method == "modify":
                 p = Process(target=self.modify, args=(path, content))
                 self.activity_descriptor = "modified"
+
             elif method == "delete":
                 p = Process(target=self.delete, args=(args,))
                 self.activity_descriptor = "deleted"
+
             else:
                 raise Exception("Unimplemented file handling function.")
         else:
@@ -97,4 +100,4 @@ class FileHandler(AbstractHandler):
             "process_id": self.process_id
         })
 
-        print(res)
+        self.writer.logMetric(res)
