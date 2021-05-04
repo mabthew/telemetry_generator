@@ -28,6 +28,9 @@ class ProcessHandler(AbstractHandler):
         except FileNotFoundError:
             print('\nInvalid command: file not found error.\n')
             return False
+        except PermissionError:
+            print('\nInvalid command: permission denied error.\n')
+            return False
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise

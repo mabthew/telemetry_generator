@@ -45,6 +45,13 @@ class TestFileHandler(unittest.TestCase):
     def test_call_create_invalid_path(self):
         result = self.f.call("create", "~/invalid_path")
         self.assertFalse( result, "call executed when it shouldn't have")
+    
+    def test_call_create_sets_process_info(self):
+        result = self.f.call("create", self.relative_path)
+        
+        self.assertIsNotNone(self.f.process_id)
+        self.assertIsNotNone(self.f.process_name)
+        self.assertIsNotNone(self.f.command_line)
 
     # modify file functionality
     def test_call_modify_on_existing_relative_path(self):
@@ -67,6 +74,13 @@ class TestFileHandler(unittest.TestCase):
         result = self.f.call("modify", "~/invalid_path")
         self.assertFalse( result, "call executed when it shouldn't have")
 
+    def test_call_modify_sets_process_info(self):
+        result = self.f.call("modify", self.relative_path)
+        
+        self.assertIsNotNone(self.f.process_id)
+        self.assertIsNotNone(self.f.process_name)
+        self.assertIsNotNone(self.f.command_line)
+
     # delete file functionality
     def test_call_delete_on_existing_relative_path(self):
         f = open(self.relative_path, "w+")
@@ -87,6 +101,15 @@ class TestFileHandler(unittest.TestCase):
     def test_call_delete_invalid_path(self):
         result = self.f.call("delete", "~/invalid_path")
         self.assertFalse( result, "call executed when it shouldn't have")
+    
+    def test_call_delete_sets_process_info(self):
+        f = open(self.relative_path, "w+")
+        f.close()
+        result = self.f.call("delete", self.relative_path)
+        
+        self.assertIsNotNone(self.f.process_id)
+        self.assertIsNotNone(self.f.process_name)
+        self.assertIsNotNone(self.f.command_line)
 
     # call method functionality
     def test_call_invalid_method(self):
