@@ -1,4 +1,5 @@
-import handlers
+from handlers import fileHandler
+from handlers import processHandler
 import datetime
 import os
 import pwd
@@ -10,8 +11,11 @@ def main():
 
     printMenu()
     while running:
-        userInput = input("command: ")
-        running = executeCommand(userInput)
+        try:
+            userInput = input("command: ")
+            running = executeCommand(userInput)
+        except KeyboardInterrupt:
+            return
 
 
 def printMenu():
@@ -55,10 +59,10 @@ def executeCommand(userInput):
     if action == "exit":
         return False
     elif action == "create" or action == "modify" or action == "delete":
-        executor = handlers.fileHandler.FileHandler(timestamp, username)
+        executor = fileHandler.FileHandler(timestamp, username)
         success = executor.call(action, args)
     elif action == "run":
-        executor = handlers.processHandler.ProcessHandler(timestamp, username)
+        executor = processHandler.ProcessHandler(timestamp, username)
         success = executor.run(args)
     elif action == "help":
         printMenu()

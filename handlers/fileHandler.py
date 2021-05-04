@@ -17,7 +17,7 @@ class FileHandler(AbstractHandler):
         else:
             content = " ".join(argList[1:]).rstrip()
             if (content[0] == "\"" and content[-1] == "\""):
-                return True, argList[0], content
+                return True, argList[0], content[1:-1]
             return False, "", ""
 
     def call(self, method, args):
@@ -52,22 +52,26 @@ class FileHandler(AbstractHandler):
 
     # create file
     def create(self, path, content):
-        self.path = path
+        if os.path.exists(path):
+            print("File already exists")
+        else:
+            f = open(path, "w+")
+            f.write(content)
+            f.close()
+            print("File created")
 
-        f = open(path, "w+")
-        f.write(content)
-        f.close()
-        print("File created")
-
-    # modify file, create if not exist
-    # TODO: implement modify
+    # append to file, create if not exist
     def modify(self, path, content):
-        self.path = path
-
-        f = open(path, "w+")
-        f.write(content)
+        if os.path.exists(path):
+            f = open(path, "a")
+            f.write(content)
+            print("Appended to file")
+        else:
+            f = open(path, "w+")
+            f.write(content)
+            f.close()
+            print("File created")
         f.close()
-        print("File created")
 
     # delete file
     def delete(self, path):
