@@ -18,8 +18,6 @@ class NetworkHandler(AbstractHandler):
     def validateArgs(self, args):
         argList = args.lstrip().rstrip().split(" ")
 
-        print(argList)
-
         if len(argList) == 2:
             return True, argList[0], argList[1], ""
         elif len(argList) == 3:
@@ -33,7 +31,6 @@ class NetworkHandler(AbstractHandler):
     # create process
     def send(self, args):
         
-        print(args)
         valid, url, port, data = self.validateArgs(args)
 
         self.size = len(data.encode('utf-8'))   # size of data in bytes
@@ -54,9 +51,8 @@ class NetworkHandler(AbstractHandler):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             
             
-            s.connect(("google.com", 80))
+            s.connect((url, port))
             socketInfo = s.getsockname()
-            print(socketInfo)
             self.source_address =socketInfo[0]
             self.source_port = socketInfo[1]
             p = Process(target=self.sendData, args=[s, url, data])

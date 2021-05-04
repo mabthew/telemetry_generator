@@ -1,5 +1,6 @@
 from handlers import fileHandler
 from handlers import processHandler
+from handlers import networkHandler
 from handlers import logWriter 
 import datetime
 import time
@@ -55,12 +56,13 @@ def printMenu():
     print("\t\'modify <filename> \"[content]\"\'  Create or append to a file.")
     print("\t\'delete <filename>\' \t\t Delete a file.")
     print("\t\'run <command> [args...]\' \t Execute a command.")
+    print("\t\'send <url> <port> \"[data]\"\' \t Execute a command.")
     print("\t\'help\' \t\t\t\t Show this message.")
     print("\t\'exit\' \t\t\t\t Exit program.\n")
 
 
 def parseInput(input):
-    parsedInput = input.split(' ')
+    parsedInput = input.lstrip().rstrip().split()
 
     return parsedInput[0], ' '.join(parsedInput[1:])
 
@@ -83,6 +85,9 @@ def executeCommand(userInput):
     elif action == "run":
         executor = processHandler.ProcessHandler(timestamp, username)
         success = executor.run(args)
+    elif action == "send":
+        executor = networkHandler.NetworkHandler(timestamp, username)
+        success = executor.send(args)
     elif action == "help":
         printMenu()
     else:
