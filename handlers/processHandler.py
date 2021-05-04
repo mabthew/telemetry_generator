@@ -12,7 +12,7 @@ class ProcessHandler(AbstractHandler):
     # create process
     def run(self, command):
         try:
-            parsedCommand = command.split(' ')
+            parsedCommand = command.split(" ")
             # create subprocess to execute command
             p = subprocess.Popen(parsedCommand)
 

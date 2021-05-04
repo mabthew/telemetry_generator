@@ -11,7 +11,7 @@ class FileHandler(AbstractHandler):
         super().__init__(timestamp, username)
 
     def validateArgs(self, args):
-        argList = args.split(" ")
+        argList = args.lstrip().rstrip().split(" ")
         if len(argList) == 1:
             return True, argList[0], ""
         else:
