@@ -1,14 +1,20 @@
 import os
 import json
-from .abstractHandler import AbstractHandler
-from multiprocessing import Process, Value
-import psutil
 import time
+import psutil
+from multiprocessing import Process, Value
+
+from .abstractHandler import AbstractHandler
 
 
 class FileHandler(AbstractHandler):
     def __init__(self, timestamp, username):
         super().__init__(timestamp, username)
+        self.path = ''
+        self.activity_descriptor = ''
+        self.process_name = ''
+        self.command_line = ''
+        self.process_id = -1
 
     def validateArgs(self, args):
         argList = args.lstrip().rstrip().split(" ")
@@ -24,7 +30,7 @@ class FileHandler(AbstractHandler):
         valid, path, content = self.validateArgs(args)
         self.path = path
 
-        # stores whether or not the requested function actually executes
+        # stores whether or not the requested function actually executes (since a new thread is being spawned it can't be treated as a basic variable)
         executed = Value('i', False)
 
         if valid:

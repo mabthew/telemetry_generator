@@ -1,13 +1,17 @@
-import subprocess
-import sys
 import os
+import sys
 import json
 import psutil
+import subprocess
+
 from .abstractHandler import AbstractHandler
 
 class ProcessHandler(AbstractHandler):
     def __init__(self, timestamp, username):
         super().__init__(timestamp, username)
+        self.process_name = ''
+        self.command_line = ''
+        self.process_id = -1
 
     # create process
     def run(self, command):

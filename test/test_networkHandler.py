@@ -3,13 +3,13 @@ import datetime
 import pwd
 import os
 from handlers import networkHandler
-from handlers import logWriter
+from handlers import logger
 
 
 class TestNetworkHandler(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        logWriter.LogWriter.getInstance()
+        logger.Logger.getInstance()
 
     def setUp(self):
         self.cleanUp()

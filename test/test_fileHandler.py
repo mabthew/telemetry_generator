@@ -1,15 +1,16 @@
+import os
+import pwd
 import unittest
 import datetime
-import pwd
-import os
+
+from handlers import logger
 from handlers import fileHandler
-from handlers import logWriter
 
 
 class TestFileHandler(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        logWriter.LogWriter("logs.json")
+        logger.Logger("logs.json")
 
     def setUp(self):
         self.cleanUp()
