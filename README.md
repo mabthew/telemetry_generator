@@ -1,6 +1,6 @@
 # Telemetry Generator
 
-This framework generates and records activity for the purpose of validating activity recorded by a Red Canary EDR agent. It 
+This framework generates and records activity for the purpose of validating activity recorded by a Red Canary EDR agent.
 
 ## Installation
 This program is written in Python, so with Python installed, you can clone and install necessary dependencies using the following command.
@@ -12,29 +12,29 @@ git clone https://github.com/mabthew/telemetry_generator &&
 ```
 
 ## Usage
-The program can be run using `python main.py`. It also provides an optional flag -f, after which the user can enter a path to where they want the output file to end up.
+The program can be run using `python main.py`. It also provides an optional flag -f, after which the user can enter a path to where they want the output file to end up. Ex: `python main.py -f output.json`.
 
 The framework exposes 5 functionalities.
 
-`create <path> "[contents]"`: creates  a file given an absolute or relative path and optional contents.
+* `create <path> "[content]"`: creates  a file given an absolute or relative path and optional contents.
 
-`modify <path> "[contents]"`: appends to the end of an existing file or creates a new file with the provided text.
+* `modify <path> "[content]"`: appends to the end of an existing file or creates a new file with the provided text.
 
-`delete <path>`: deletes a file given an absolute or relative path.
+* `delete <path>`: deletes a file given an absolute or relative path.
 
-`run <command> [args...]`: executes the provided command and takes in optional arguments.
+* `run <command> [args...]`: executes the provided command and takes in optional arguments.
 
-`send <address> <port> "[data]"`: establishes a tcp connection with the provided address and port and sends over data (optional).
+* `send <address> <port> "[data]"`: establishes a tcp connection with the provided address and port and sends over data (optional).
 
 
 
 ## Implementation Details
 
-### Handler Classes
+### Structure
 
-I used python for this project because I wanted to use an object-oriented language. This allowed me to create a generic abstract superclass that all my other classes inherit from. With this constructor of this class, I initialize any variables shared across all of its subclasses. I also utilized an abstract method for logging so that all subclasses were forced to implement the method to fulfill their individual requirements. The superclass also has a method `getProcessInfo()` that is utilized the same by all subclasses.
+I used python for this project because I wanted to use an object-oriented language. This allowed me to create a generic abstract superclass that all my other classes inherit from. With this constructor of this class, I initialize any variables shared across all of its subclasses. I utilized an abstract method for logging so that all subclasses were forced to implement the method to fulfill their individual requirements. The superclass also has a method `getProcessInfo()` that is utilized the same by all subclasses to get process related information for logging purposes.
 
-This class structure allows for the code to easily be extended in the future to handle other types of activity generation and logging. One could simply create a new class that inherits the class I mentioned above, implement the `log()` function, and add whatever other type of activity they please.
+This class structure allows for the program to easily be extended in the future to handle other types of activity generation and logging. One could simply create a new class that inherits the class mentioned above, implement the `log()` function, and add the logic to perform the desired activity.
 
 
 ### Logger
@@ -50,7 +50,7 @@ I used python's unittest package to test my program's functionality. I structure
 
 ### Network calls
 
-The instructions used the wording "establish a network connection and transmit data", so based on the word establish I implemented a TCP socket to transmit strings.
+The instructions used the wording "establish a network connection and transmit data", so based on the word establish I implemented a TCP socket to transmit data.
 
 ### Supported OS
 
@@ -61,6 +61,6 @@ docker build .
 docker run <image_id>
 ```
 
-### What's next
+### Improvements
 
-In order to get this completed and turned in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like json or files.
+In order to get this completed and turned in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like json or files. 
