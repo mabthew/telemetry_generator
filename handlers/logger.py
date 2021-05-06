@@ -1,22 +1,22 @@
 import os
 from pathlib import Path
 
-class LogWriter:
+class Logger:
     __instance = None
 
     @staticmethod 
     def getInstance():
-        """ Static access method. """
-        if LogWriter.__instance == None:
-            LogWriter()
-        return LogWriter.__instance
+        # static access method
+        if Logger.__instance == None:
+            Logger()
+        return Logger.__instance
 
     def __init__(self, path):
         self.path = path
-        if LogWriter.__instance != None:
+        if Logger.__instance != None:
             raise Exception("This class is a singleton!")
         else:
-            LogWriter.__instance = self
+            Logger.__instance = self
 
 
     # add item to json list   

@@ -1,28 +1,27 @@
-from handlers import fileHandler
-from handlers import processHandler
-from handlers import networkHandler
-from handlers import logWriter 
-import datetime
-import time
 import os
 import pwd
-import subprocess
+import time
 import argparse
+import datetime
+import subprocess
+
+from handlers.logger import Logger
+from handlers.fileHandler import FileHandler
+from handlers.processHandler import ProcessHandler
+from handlers.networkHandler import NetworkHandler
 
 
 def main():
 
     parser = argparse.ArgumentParser(description='Generate and record endpoint activity.')
-
     parser.add_argument('-f', '--file', help='Path to JSON output file.', required=False)
-
     args = parser.parse_args()
 
     if args.file != None:
-        writer = logWriter.LogWriter(args.file)
+        writer = Logger(args.file)
     else:
         time = datetime.datetime.now().strftime("%Y_%m_%d_%H%M%S")
-        writer = logWriter.LogWriter("logs/" +  time + ".json")
+        writer = Logger("logs/" +  time + ".json")
     
     writer.openLog()
 
@@ -70,23 +69,23 @@ def parseInput(input):
 def executeCommand(userInput):
     action, args = parseInput(userInput)
 
-    # get call info
-    timestamp = datetime.datetime.now()
+    # get caller info
     username = pwd.getpwuid(os.getuid())[0]
 
     executor = None
     success = False
+     
     if action == "exit":
-        logWriter.LogWriter.getInstance().closeLog()
+        Logger.getInstance().closeLog()
         return False
     elif action == "create" or action == "modify" or action == "delete":
-        executor = fileHandler.FileHandler(timestamp, username)
+        executor = FileHandler(datetime.datetime.now(), username)
         success = executor.call(action, args)
     elif action == "run":
-        executor = processHandler.ProcessHandler(timestamp, username)
+        executor = ProcessHandler(datetime.datetime.now(), username)
         success = executor.run(args)
     elif action == "send":
-        executor = networkHandler.NetworkHandler(timestamp, username)
+        executor = NetworkHandler(datetime.datetime.now(), username)
         success = executor.send(args)
     elif action == "help":
         printMenu()
@@ -94,6 +93,7 @@ def executeCommand(userInput):
         print("\n\'" + userInput + "\' is not a command.")
         print("Enter \'help\' to see available commands.\n")
 
+    # only log if requested command executed properly
     if executor and success:
         executor.log()
 

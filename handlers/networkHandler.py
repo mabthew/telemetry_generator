@@ -1,20 +1,29 @@
-import subprocess
-import sys
 import os
+import sys
 import json
 import psutil
 import socket
 import requests
+import subprocess
 import validators
-import ctypes
 from multiprocessing import Process, Value
+
 from .abstractHandler import AbstractHandler
 
 
 class NetworkHandler(AbstractHandler):
     def __init__(self, timestamp, username):
         super().__init__(timestamp, username)
+        self.destination_address = ''
+        self.destination_port = -1
+        self.source_address = ''
+        self.source_port = -1
+        self.size = -1  # size in bytes
         self.protocol = "TCP"
+        self.process_name = ''
+        self.command_line = ''
+        self.process_id = -1
+
 
     def validateArgs(self, args):
         argList = args.lstrip().rstrip().split(" ")

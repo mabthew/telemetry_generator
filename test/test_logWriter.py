@@ -3,7 +3,7 @@ import pwd
 import json
 import unittest
 import datetime
-from handlers import logWriter
+from handlers import logger
 from handlers import fileHandler
 from handlers import processHandler
 from handlers import networkHandler
@@ -11,11 +11,11 @@ from handlers import networkHandler
 class TestLogWriter(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        logWriter.LogWriter.getInstance()
+        logger.Logger.getInstance()
 
     def setUp(self):
         self.cleanUp()
-        self.writer = logWriter.LogWriter.getInstance()
+        self.writer = logger.Logger.getInstance()
 
         timestamp = datetime.datetime.now()
         username = pwd.getpwuid(os.getuid())[0]

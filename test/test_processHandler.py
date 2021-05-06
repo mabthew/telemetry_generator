@@ -3,13 +3,13 @@ import datetime
 import pwd
 import os
 from handlers import processHandler
-from handlers import logWriter
+from handlers import logger
 
 
 class TestProcessHandler(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        writer = logWriter.LogWriter.getInstance()
+        writer = logger.Logger.getInstance()
 
     def setUp(self):
         self.cleanUp()
