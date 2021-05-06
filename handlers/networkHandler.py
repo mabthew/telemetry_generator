@@ -32,13 +32,12 @@ class NetworkHandler(AbstractHandler):
             return True, argList[0], argList[1], ""
         elif len(argList) == 3:
             content = " ".join(argList[2:]).rstrip()
-            if (content[0] == "\"" and content[-1] == "\""):
+            if (content[0] == "\"" and content[-1] == "\""):    # make sure content is structured correctly
                 return True, argList[0], argList[1], content[1:-1]
             return False, "", "", ""
         else:
             return False, argList[0], "", ""
 
-    # create process
     def send(self, args):
         
         valid, address, port, data = self.validateArgs(args)
@@ -84,7 +83,8 @@ class NetworkHandler(AbstractHandler):
         return True
 
     def sendData(self, s, address, data):
-        s.send(b'hello')
+        byteString = data.encode()
+        s.send(byteString)
         s.close()
 
     def log(self):
