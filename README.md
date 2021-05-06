@@ -44,7 +44,7 @@ I implemented the logger as a singleton because I wanted only one instance of it
 
 ### Testing
 
-I used python's unittest package to test my program's functionality. I structured my code to only execute logs when the handlers returned true. Because of this, I was able to test the log functionality separately from the handlers. The tests can be run using `python -m unittest -b -v`.
+I used python's unittest package to test my program's functionality. I structured my code to only execute logs when the handlers returned true. Because of this, I was able to test the loging functionality separately from the handlers. The tests can be run using `python -m unittest -b -v`.
 
 ## Notes
 
@@ -54,7 +54,7 @@ The instructions used the wording "establish a network connection and transmit d
 
 ### Supported OS
 
-I developed this on my a Mac and tested it on a Docker container running Linux to ensure that it worked on at least 2 platforms. I've included the Dockerfile I used for testing. It can be run using the following command. I entered the running container using `docker exec -it eloquent_moore /bin/bash` and ran the program inside to verify the logs worked properly.
+I developed this on a Mac and tested it on a Docker container running Linux to ensure that it worked on at least 2 platforms. I've included the Dockerfile I used for testing. It can be run using the following command. I entered the running container using `docker exec -it <container_id> /bin/bash` and ran the program inside to verify the logs worked properly.
 
 ```
 docker build .  
@@ -63,4 +63,4 @@ docker run <image_id>
 
 ### Improvements
 
-In order to get this completed and turned in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like json or files. Another thing I would spend time on is testing for more edge cases. 
+To complete this assignment and submit it in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like JSON or files. Another thing I would spend time on is testing for more edge cases. 
