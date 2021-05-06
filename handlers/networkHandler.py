@@ -14,6 +14,7 @@ from .abstractHandler import AbstractHandler
 class NetworkHandler(AbstractHandler):
     def __init__(self, timestamp, username):
         super().__init__(timestamp, username)
+        self.protocol = "TCP"
 
     def validateArgs(self, args):
         argList = args.lstrip().rstrip().split(" ")
@@ -82,7 +83,7 @@ class NetworkHandler(AbstractHandler):
             "destination_port": self.destination_port,
             "source_address": self.source_address,
             "source_port": self.source_port,
-            "protocol": "TCP",
+            "protocol": self.protocol,
             "size": self.size,
             "process_name": self.process_name,
             "command_line": self.command_line,

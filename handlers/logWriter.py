@@ -26,7 +26,7 @@ class LogWriter:
 
     # open json list
     def openLog(self):
-        Path("./logs").mkdir(parents=True, exist_ok=True)   # create logs directory if not exist
+        Path("./logs").mkdir(parents=True, exist_ok=True)   # create logs directory if not
         with open(self.path, 'a') as f:
              f.write("[ ")
 
