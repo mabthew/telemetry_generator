@@ -46,7 +46,10 @@ class NetworkHandler(AbstractHandler):
         self.destination_address = address
         self.size = len(data.encode('utf-8'))   # size of data in bytes
 
-        if not port.isnumeric():
+        if port == "":
+            print("\n A port is required. See 'help'.\n")
+            return False
+        elif not port.isnumeric():
             print("\n Invalid port.\n")
             return False
         else:

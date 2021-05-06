@@ -51,13 +51,13 @@ def printMenu():
     print("\nGenerate and record endpoint activity.")
 
     print("\nOptions:")
-    print("\t\'create <filename> \"[content]\"\'  Create a new file.")
-    print("\t\'modify <filename> \"[content]\"\'  Create or append to a file.")
-    print("\t\'delete <filename>\' \t\t Delete a file.")
-    print("\t\'run <command> [args...]\' \t Execute a command.")
-    print("\t\'send <url> <port> \"[data]\"\' \t Execute a command.")
-    print("\t\'help\' \t\t\t\t Show this message.")
-    print("\t\'exit\' \t\t\t\t Exit program.\n")
+    print("\t\'create <filename> \"[content]\"\'    Create a new file.")
+    print("\t\'modify <filename> \"[content]\"\'    Create or append to a file.")
+    print("\t\'delete <filename>\' \t\t   Delete a file.")
+    print("\t\'run <command> [args...]\' \t   Execute a command.")
+    print("\t\'send <address> <port> \"[data]\"\'   Establish a connection and send data over tcp.")
+    print("\t\'help\' \t\t\t\t   Show this message.")
+    print("\t\'exit\' \t\t\t\t   Exit program.\n")
 
 
 def parseInput(input):

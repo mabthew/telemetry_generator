@@ -33,7 +33,7 @@ class ProcessHandler(AbstractHandler):
             print('\nInvalid command: permission denied error.\n')
             return False
         except:
-            print("Unexpected error:", sys.exc_info()[0])
+            print("\nUnexpected error:", sys.exc_info()[0])
             raise
 
     def log(self):

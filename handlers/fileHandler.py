@@ -44,7 +44,7 @@ class FileHandler(AbstractHandler):
                 p = Process(target=self.delete, args=[args, executed])
                 self.activity_descriptor = "deleted"
             else:
-                raise Exception("Unimplemented file handling function.")
+                raise Exception("\nUnimplemented file handling function.")
         else:
             print("\n Invalid input. See 'help'.\n")
             return False
@@ -62,12 +62,12 @@ class FileHandler(AbstractHandler):
     # create file
     def create(self, path, content, executed):
         if os.path.exists(path):
-            print("File already exists")
+            print("\nFile already exists\n")
         else:
             f = open(path, "w+")
             f.write(content)
             f.close()
-            print("File created")
+            print("\nFile created\n")
             executed.value = True
 
     # append to file, create if not exist
@@ -80,7 +80,7 @@ class FileHandler(AbstractHandler):
             f = open(path, "w+")
             f.write(content)
             f.close()
-            print("File created")
+            print("\nFile created\n")
         executed.value = True
         f.close()
 
@@ -90,10 +90,10 @@ class FileHandler(AbstractHandler):
 
         if os.path.exists(path):
             os.remove(path)
-            print("File Deleted")
+            print("\nFile deleted\n")
             executed.value = True
         else:
-            print("path: \'" + path + "\': does not exist")
+            print("\npath: \'" + path + "\': does not exist\n")
 
     def getFullPath(self):
         pass

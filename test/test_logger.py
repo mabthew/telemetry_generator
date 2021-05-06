@@ -8,7 +8,7 @@ from handlers import fileHandler
 from handlers import processHandler
 from handlers import networkHandler
 
-class TestLogWriter(unittest.TestCase):
+class TestLogger(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         logger.Logger.getInstance()
@@ -106,10 +106,12 @@ class TestLogWriter(unittest.TestCase):
 
         self.assertIn("timestamp", data)
         self.assertIn("username", data)
+        self.assertIn("path", data)
+        self.assertIn("activity_descriptor", data)
+        self.assertEqual(data["activity_descriptor"], "modified")
         self.assertIn("process_name", data)
         self.assertIn("command_line", data)
         self.assertIn("process_id", data)
-
 
     def test_delete_file_generates_logs(self):
         timestamp = datetime.datetime.now()
@@ -132,6 +134,9 @@ class TestLogWriter(unittest.TestCase):
 
         self.assertIn("timestamp", data)
         self.assertIn("username", data)
+        self.assertIn("path", data)
+        self.assertIn("activity_descriptor", data)
+        self.assertEqual(data["activity_descriptor"], "deleted")
         self.assertIn("process_name", data)
         self.assertIn("command_line", data)
         self.assertIn("process_id", data)
@@ -146,8 +151,6 @@ class TestLogWriter(unittest.TestCase):
         
         success = self.networkHandler.send("google.com 80 \"data\"")
 
-        print('\n\n\n\n\n\nhello\n\n\n\n\n')
-        print(success)
         if success:
             self.writer.openLog()
             self.networkHandler.log()
@@ -160,6 +163,15 @@ class TestLogWriter(unittest.TestCase):
 
         self.assertIn("timestamp", data)
         self.assertIn("username", data)
+        
+        
+        self.assertIn("destination_address", data)
+        self.assertIn("destination_port", data)
+        self.assertIn("source_address", data)
+        self.assertIn("source_port", data)
+        self.assertIn("protocol", data)
+        self.assertIn("size", data)
         self.assertIn("process_name", data)
         self.assertIn("command_line", data)
         self.assertIn("process_id", data)
+

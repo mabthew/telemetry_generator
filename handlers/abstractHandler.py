@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 
 from .logger import Logger
 
-
 class AbstractHandler(ABC):
     def __init__(self, timestamp, username):
         self.timestamp = timestamp
