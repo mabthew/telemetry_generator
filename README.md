@@ -54,7 +54,7 @@ The instructions used the wording "establish a network connection and transmit d
 
 ### Supported OS
 
-I developed this on my a Mac and tested it on a Docker container running Linux to ensure that it worked on at least 2 platforms. I've included the Dockerfile I used for testing. It can be run using the following command.
+I developed this on my a Mac and tested it on a Docker container running Linux to ensure that it worked on at least 2 platforms. I've included the Dockerfile I used for testing. It can be run using the following command. I entered the running container using `docker exec -it eloquent_moore /bin/bash` and ran the program inside to verify the logs worked properly.
 
 ```
 docker build .  
@@ -63,4 +63,4 @@ docker run <image_id>
 
 ### Improvements
 
-In order to get this completed and turned in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like json or files. 
+In order to get this completed and turned in a reasonable amount of time, I had to make choices about what to implement and what to leave unimplemented. Given more time, I would focus on expanding functionality. This framework would be much more powerful if it allowed config files to drive program execution rather than command line input. Further, the network implementation is very simple and would probably be more useful if it allowed for http requests and content of different types like json or files. Another thing I would spend time on is testing for more edge cases. 
